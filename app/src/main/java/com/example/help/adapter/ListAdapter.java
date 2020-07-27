@@ -5,25 +5,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.help.DescriptionActivity;
 import com.example.help.HelpActivity;
-import com.example.help.MainActivity;
 import com.example.help.R;
 import com.example.help.pojo.CardHelp;
 
 import java.util.ArrayList;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private CardHelp cardHelp;
-    private ArrayList<CardHelp> helps;
+    private ArrayList<CardHelp> list;
     private Context context;
     private int activity;
+    private static int typeOfList;
 
-    public ListAdapter(Context context, int activity){
-        this.helps = MainActivity.helps;
+    public ListAdapter(Context context, ArrayList<CardHelp> list, int activity){
+        this.list = list;
         this.context = context;
         this.activity = activity;
     }
@@ -36,38 +38,39 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListAdapter.ViewHolder holder, int position) {
-        cardHelp = helps.get(position);
+    public void onBindViewHolder(@NonNull ListAdapter.ViewHolder holder, final int position) {
+        cardHelp = list.get(position);
         if(activity == 1){
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
-                    context.startActivity(new Intent(context, HelpActivity.class));
+                    typeOfList = position;
+                    Intent intent = new Intent(context, HelpActivity.class);
+                    intent.putExtra("typeOfList", position);
+                    context.startActivity(intent);
                 }
             });
             holder.textViewTitle.setText(cardHelp.getTitle());
             holder.textViewSubTitle.setText(cardHelp.getDescription());
 
         }else if(activity == 2){
-            holder.textViewTitle.setText(cardHelp.getOfList(position));
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v){
+                    Intent intent = new Intent(context, DescriptionActivity.class);
+                    intent.putExtra("typeOfList", typeOfList);
+                    intent.putExtra("problem", position);
+                    context.startActivity(intent);
+                }
+            });
+            holder.textViewTitle.setText(cardHelp.getTitle());
+            holder.textViewSubTitle.setText(cardHelp.getDescription());
         }
     }
 
     @Override
     public int getItemCount(){
-        return sizeRecyclerView();
-    }
-    
-    public int sizeRecyclerView(){
-        /*int tam = 0;
-        if (activity == 1){
-            tam =  helps.size();
-        }
-        if(activity == 2){
-            tam =  5;
-        }
-        return tam;*/
-        return helps.size();
+        return list.size();
     }
 
     //CLASE INTERNA

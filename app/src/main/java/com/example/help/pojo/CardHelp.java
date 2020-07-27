@@ -5,6 +5,36 @@ import java.util.ArrayList;
 public class CardHelp {
     private String title;
     private String description;
+
+    public CardHelp(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+}
+/*
+package com.example.help.pojo;
+
+import java.util.ArrayList;
+
+public class CardHelp {
+    private String title;
+    private String description;
     private ArrayList<String> list = new ArrayList<>();
     private ArrayList<String> text = new ArrayList<>();
 
@@ -59,3 +89,5 @@ public class CardHelp {
         this.text.add(text);
     }
 }
+
+ */
