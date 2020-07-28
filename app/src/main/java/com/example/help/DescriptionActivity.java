@@ -1,5 +1,7 @@
 package com.example.help;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,9 @@ public class DescriptionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.description_activity);
+        //Poner flecha atras en toolbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         problem = findViewById(R.id.problem);
         text = findViewById(R.id.text);
         Bundle datos = this.getIntent().getExtras();
@@ -65,5 +70,17 @@ public class DescriptionActivity extends AppCompatActivity {
         listAccount.add(new CardHelp("Cuenta item 2", "Descripción"));
         listAccount.add(new CardHelp("Cuenta item 3", "Descripción"));
         listAccount.add(new CardHelp("Cuenta item 4", "Descripción"));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: //hago un case por si en un futuro agrego mas opciones
+                Log.i("ActionBar", "Atrás!");
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

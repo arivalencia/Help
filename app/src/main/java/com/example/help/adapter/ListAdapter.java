@@ -1,4 +1,5 @@
 package com.example.help.adapter;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -28,6 +29,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         this.list = list;
         this.context = context;
         this.activity = activity;
+
+
     }
 
     @NonNull

@@ -2,13 +2,17 @@ package com.example.help;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+//import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,10 +21,11 @@ import com.example.help.pojo.CardHelp;
 
 import java.util.ArrayList;
 
-public class HelpActivity extends AppCompatActivity{
+public class HelpActivity extends AppCompatActivity {
     ArrayList<CardHelp> listApp = new ArrayList<>();
     ArrayList<CardHelp> listUserGuide = new ArrayList<>();
     ArrayList<CardHelp> listAccount = new ArrayList<>();
+    Toolbar toolbar;
     Bundle datos;
     RecyclerView listHelpsOne;
     ListAdapter adapter;
@@ -31,6 +36,8 @@ public class HelpActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
+        //Poner flecha atras en toolbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         datos = this.getIntent().getExtras();
         typeOfList = datos.getInt("typeOfList");
         title = findViewById(R.id.title);
@@ -62,21 +69,26 @@ public class HelpActivity extends AppCompatActivity{
     public ListAdapter listAdapter(){
         switch (typeOfList){
             case 0 :
-                adapter = new ListAdapter(this, listApp, 2);
+                //adapter = new ListAdapter(this, listApp, 2);
                 title.setText("Aplicación");
-
-            break;
+                return new ListAdapter(this, listApp, 2);
             case 1 :
-                adapter = new ListAdapter(this, listUserGuide, 2);
+                //adapter = new ListAdapter(this, listUserGuide, 2);
                 title.setText("Guía de usuario");
-            break;
+                return new ListAdapter(this, listUserGuide, 2);
             case 2 :
-                adapter = new ListAdapter(this, listAccount, 2);
+                //adapter = new ListAdapter(this, listAccount, 2);
                 title.setText("Cuenta");
-            break;
+                return new ListAdapter(this, listAccount, 2);
             default:
-                Toast.makeText(this, "Problemas con la app", Toast.LENGTH_SHORT).show();
+                return new ListAdapter(this, listAccount, 2);
         }
-        return adapter;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return true;
+    }
+
 }
