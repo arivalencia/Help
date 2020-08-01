@@ -29,8 +29,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         this.list = list;
         this.context = context;
         this.activity = activity;
-
-
     }
 
     @NonNull
